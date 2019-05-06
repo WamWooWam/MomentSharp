@@ -92,7 +92,7 @@ namespace MomentSharp
         /// <returns><see cref="DateTime"/></returns>
         public static DateTime ToUTC(this DateTime dateTime, string fromTimeZoneId)
         {
-            return TimeZoneInfo.ConvertTimeBySystemTimeZoneId(dateTime, fromTimeZoneId, TimeZoneInfo.Utc.Id);
+            return dateTime.ToUniversalTime();
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace MomentSharp
         {
             dateTime = System.DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
 
-            return TimeZoneInfo.ConvertTimeBySystemTimeZoneId(dateTime, toTimeZoneId);
+            return TimeZoneInfo.ConvertTime(dateTime, TimeZoneInfo.FindSystemTimeZoneById(toTimeZoneId));
         }
     }
 }

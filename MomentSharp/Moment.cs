@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Threading;
 using MomentSharp.Globalization;
 using MomentSharp.Globalization.Languages;
@@ -8,16 +9,26 @@ namespace MomentSharp
     /// <summary>
     /// Moment object which provides support for several DateTime functions that are not built-in to C#
     /// </summary>
-    public class Moment
+    public struct Moment
     {
         /// <summary>
         ///     Get's a new Moment defaulting values to DateTime.UtcNow, unless <paramref name="zero" /> is true in which values
         ///     will be set to the min value
         /// </summary>
         /// <param name="zero">use min values instead of UtcNow</param>
-        public Moment(bool zero = false)
+        public Moment(DateTime? now = null)
         {
-            if (zero)
+            if (now != null)
+            {
+                Year = now.Value.Year;
+                Month = now.Value.Month;
+                Day = now.Value.Day;
+                Hour = now.Value.Hour;
+                Minute = now.Value.Minute;
+                Second = now.Value.Second;
+                Millisecond = now.Value.Millisecond;
+            }
+            else
             {
                 Year = DateTime.MinValue.Year;
                 Month = 1;
@@ -26,17 +37,6 @@ namespace MomentSharp
                 Minute = 0;
                 Second = 0;
                 Millisecond = 0;
-            }
-            else
-            {
-                var now = DateTime.UtcNow;
-                Year = now.Year;
-                Month = now.Month;
-                Day = now.Day;
-                Hour = now.Hour;
-                Minute = now.Minute;
-                Second = now.Second;
-                Millisecond = now.Millisecond;
             }
             Language = SetLanguageByCulture();
         }
@@ -87,7 +87,7 @@ namespace MomentSharp
         /// <returns>ILocalize</returns>
         private static ILocalize SetLanguageByCulture()
         {
-            var culture = Thread.CurrentThread.CurrentCulture.ToString().Replace("-", "");
+            var culture = CultureInfo.CurrentUICulture.ToString().Replace("-", "");
             switch (culture)
             {
                 case "enUS":
