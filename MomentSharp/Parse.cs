@@ -26,7 +26,7 @@ namespace MomentSharp
         /// <returns>DateTime in UTC</returns>
         public static DateTime UnixToDateTime(this int unixTimeStamp)
         {
-            return UnixToDateTime((double) unixTimeStamp);
+            return UnixToDateTime((double)unixTimeStamp);
         }
 
         /// <summary>

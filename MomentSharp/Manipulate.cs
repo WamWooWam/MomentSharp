@@ -37,14 +37,14 @@ namespace MomentSharp
                 case DateTimeParts.Month:
                     return new DateTime(dateTime.Year, dateTime.Month, 1);
                 case DateTimeParts.Quarter:
-                    return new DateTime(dateTime.Year, ((dateTime.Month - 1)/3)*3 + 1, 1);
+                    return new DateTime(dateTime.Year, ((dateTime.Month - 1) / 3) * 3 + 1, 1);
                 case DateTimeParts.Week:
                     dateTime = dateTime.StartOf(DateTimeParts.Day);
                     var ci = CultureInfo.CurrentCulture;
-                    var first = (int) ci.DateTimeFormat.FirstDayOfWeek;
-                    var current = (int) dateTime.DayOfWeek;
+                    var first = (int)ci.DateTimeFormat.FirstDayOfWeek;
+                    var current = (int)dateTime.DayOfWeek;
                     return first <= current
-                        ? dateTime.AddDays(-1*(current - first))
+                        ? dateTime.AddDays(-1 * (current - first))
                         : dateTime.AddDays(first - current - 7);
                 case DateTimeParts.Day:
                     return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, 0, 0, 0, 0);

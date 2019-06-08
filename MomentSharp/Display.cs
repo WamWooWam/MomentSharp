@@ -25,7 +25,7 @@ namespace MomentSharp
             var timeSpan = (moment.DateTime() - dateTime);
             var isFuture = timeSpan.TotalSeconds > 0;
             timeSpan = timeSpan.Negate();
-            if (timeSpan.TotalSeconds < 60*45)
+            if (timeSpan.TotalSeconds < 60 * 45)
             {
                 if (timeSpan.TotalSeconds.InRange(0, 45)) // 0-45 seconds
                 {
@@ -35,29 +35,29 @@ namespace MomentSharp
                 {
                     return language.Translate(RelativeTime.Minute, timeSpan.Minutes, showSuffix, isFuture);
                 }
-                if (timeSpan.TotalSeconds.InRange(91, 60*45)) //91 seconds to 45 minutes
+                if (timeSpan.TotalSeconds.InRange(91, 60 * 45)) //91 seconds to 45 minutes
                 {
                     return language.Translate(RelativeTime.Minutes, timeSpan.Minutes, showSuffix, isFuture);
                 }
             }
-            if (timeSpan.TotalMinutes < 60*22)
+            if (timeSpan.TotalMinutes < 60 * 22)
             {
                 if (timeSpan.TotalMinutes.InRange(46, 90)) //46 minutes to 90 minutes
                 {
                     return language.Translate(RelativeTime.Hour, timeSpan.Hours, showSuffix, isFuture);
                 }
-                if (timeSpan.TotalMinutes.InRange(91, 60*22)) //91 minutes to 22 hours
+                if (timeSpan.TotalMinutes.InRange(91, 60 * 22)) //91 minutes to 22 hours
                 {
                     return language.Translate(RelativeTime.Hours, timeSpan.Hours, showSuffix, isFuture);
                 }
             }
-            if (timeSpan.TotalHours < 24*25)
+            if (timeSpan.TotalHours < 24 * 25)
             {
                 if (timeSpan.TotalHours.InRange(23, 36)) //23-36 hours
                 {
                     return language.Translate(RelativeTime.Day, timeSpan.Days, showSuffix, isFuture);
                 }
-                if (timeSpan.TotalHours.InRange(37, 24*25)) //37 hours to 25 days
+                if (timeSpan.TotalHours.InRange(37, 24 * 25)) //37 hours to 25 days
                 {
                     return language.Translate(RelativeTime.Days, timeSpan.Days, showSuffix, isFuture);
                 }
@@ -68,7 +68,7 @@ namespace MomentSharp
             }
             if (timeSpan.TotalDays.InRange(46, 345)) // 46-345 days
             {
-                return language.Translate(RelativeTime.Months, (int) Math.Abs(timeSpan.Days/30.4), showSuffix, isFuture);
+                return language.Translate(RelativeTime.Months, (int)Math.Abs(timeSpan.Days / 30.4), showSuffix, isFuture);
             }
             if (timeSpan.TotalDays.InRange(346, 547)) //346-547 days (1.5 years)
             {
@@ -76,7 +76,7 @@ namespace MomentSharp
             }
             if (timeSpan.TotalDays.InRange(548, 7305))
             {
-                return language.Translate(RelativeTime.Years, Math.Abs(timeSpan.Days/365), showSuffix, isFuture);
+                return language.Translate(RelativeTime.Years, Math.Abs(timeSpan.Days / 365), showSuffix, isFuture);
             }
             throw new Exception("Couldn't find an exceptable range to return");
         }
@@ -128,7 +128,7 @@ namespace MomentSharp
         public static int UnixTimeStamp(this DateTime dateTime, string timeZoneId = "UTC")
         {
             dateTime.ToUTC(timeZoneId);
-            var unixTimestamp = (Int32) (dateTime.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            var unixTimestamp = (Int32)(dateTime.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
             return unixTimestamp;
         }
 

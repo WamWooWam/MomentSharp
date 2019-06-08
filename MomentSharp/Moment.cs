@@ -50,7 +50,7 @@ namespace MomentSharp
         /// Date's Month
         /// </summary>
         public int Month { get; set; }
-        
+
         /// <summary>
         /// Date's Day
         /// </summary>
