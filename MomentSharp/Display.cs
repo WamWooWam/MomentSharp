@@ -95,7 +95,7 @@ namespace MomentSharp
             if (dateTime == default(DateTime)) dateTime = DateTime.Now;
 
             //compare with DateTimeParts.Day
-            var timeSpan = (moment.DateTime() - dateTime.StartOf(DateTimeParts.Day)).TotalDays;
+            var timeSpan = (moment.DateTime() - dateTime.StartOf(DateTimeParts.Day).ToLocalTime()).TotalDays;
 
             if (timeSpan < -6) return language.Translate(Globalization.Calendar.SameElse, moment.LocalTime());
             if (timeSpan < -1) return language.Translate(Globalization.Calendar.LastWeek, moment.LocalTime());
