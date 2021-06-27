@@ -90,6 +90,8 @@ namespace MomentSharp
             var culture = CultureInfo.CurrentUICulture.ToString().Replace("-", "");
             switch (culture)
             {
+                case "enGB":
+                    return new EnGb();
                 case "enUS":
                     return new EnUs();
                 case "de":

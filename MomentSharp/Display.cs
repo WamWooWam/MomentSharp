@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using MomentSharp.Globalization;
 
 namespace MomentSharp
@@ -92,18 +93,20 @@ namespace MomentSharp
         public static string Calendar(this Moment moment, DateTime dateTime = default(DateTime))
         {
             var language = moment.Language;
-            if (dateTime == default(DateTime)) dateTime = DateTime.Now;
+            if (dateTime == default(DateTime)) dateTime = DateTime.UtcNow;
 
             //compare with DateTimeParts.Day
-            var timeSpan = (moment.DateTime() - dateTime.StartOf(DateTimeParts.Day).ToLocalTime()).TotalDays;
-
-            if (timeSpan < -6) return language.Translate(Globalization.Calendar.SameElse, moment.LocalTime());
-            if (timeSpan < -1) return language.Translate(Globalization.Calendar.LastWeek, moment.LocalTime());
-            if (timeSpan < 0) return language.Translate(Globalization.Calendar.LastDay, moment.LocalTime());
-            if (timeSpan < 1) return language.Translate(Globalization.Calendar.SameDay, moment.LocalTime());
-            if (timeSpan < 2) return language.Translate(Globalization.Calendar.NextDay, moment.LocalTime());
-            if (timeSpan < 7) return language.Translate(Globalization.Calendar.NextWeek, moment.LocalTime());
-            return language.Translate(Globalization.Calendar.SameElse, moment.LocalTime());
+            var timeSpan = (moment.DateTime().ToLocalTime().StartOf(DateTimeParts.Day) - dateTime.ToLocalTime().StartOf(DateTimeParts.Day)).Days;
+            return timeSpan switch
+            {
+                < -6 => language.Translate(Globalization.Calendar.SameElse, moment.LocalTime()),
+                < -1 => language.Translate(Globalization.Calendar.LastWeek, moment.LocalTime()),
+                -1 => language.Translate(Globalization.Calendar.LastDay, moment.LocalTime()),
+                 0 => language.Translate(Globalization.Calendar.SameDay, moment.LocalTime()),
+                < 2 => language.Translate(Globalization.Calendar.NextDay, moment.LocalTime()),
+                < 7 => language.Translate(Globalization.Calendar.NextWeek, moment.LocalTime()),
+                _ => language.Translate(Globalization.Calendar.SameElse, moment.LocalTime())
+            };
         }
 
         /// <summary>
